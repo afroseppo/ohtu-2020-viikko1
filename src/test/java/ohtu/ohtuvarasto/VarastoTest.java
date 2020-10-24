@@ -1,14 +1,9 @@
 package ohtu.ohtuvarasto;
 
-import org.junit.*;
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class VarastoTest {
 
@@ -63,6 +58,85 @@ public class VarastoTest {
 
         // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void lisääminenEiTäytäYliKapasiteetin() {
+        varasto.lisaaVarastoon(12);
+
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenAlkusaldoKorjataan() {
+        Varasto varastoUusi = new Varasto(-1);
+        assertEquals(0, varastoUusi.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenLisäsyEiMuutaSaldoa() {
+        varasto.lisaaVarastoon(5);
+        
+        varasto.lisaaVarastoon(-5);
+        
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenOttoEiMuutaSaldoa() {
+        varasto.lisaaVarastoon(5);
+        varasto.otaVarastosta(-5);
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void yliSaldonOttoTyhjentääVaraston() {
+        varasto.lisaaVarastoon(5);
+        varasto.otaVarastosta(6);
+        
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void toStringinMuotoiluOikea() {
+        varasto.lisaaVarastoon(4);
+        
+        assertEquals("saldo = 4.0, vielä tilaa 6.0", varasto.toString());
+    }
+    
+    @Test
+    public void alkusaldollisellaVarastollaOikeaTilavuus() {
+        Varasto alkusaldoVarasto = new Varasto(10, 5);
+        
+        assertEquals(10, alkusaldoVarasto.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkusaldollisellaVaratsollaOikeaAlkusaldo() {
+        Varasto alkusaldoVarasto = new Varasto(10, 5);
+        
+        assertEquals(5, alkusaldoVarasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenTilavuusEiMahdollinenAlkusaldollisellaVarsatolla() {
+        Varasto alkusaldoVarsato = new Varasto(-5, 5);
+        
+        assertEquals(0, alkusaldoVarsato.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void negatiivinenAlkusaldoEiMahdollinen() {
+        Varasto alkusaldoVarsato = new Varasto(10, -5);
+        
+        assertEquals(0, alkusaldoVarsato.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void alkusaldoEiVoiOllaTilavuuttaSuurempi() {
+        Varasto alkusaldoVarasto = new Varasto(10, 15);
+        
+        assertEquals(10, alkusaldoVarasto.getSaldo(), vertailuTarkkuus);
     }
 
 }
