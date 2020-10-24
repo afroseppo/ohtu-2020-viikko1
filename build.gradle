@@ -30,7 +30,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['paaohjelma/**'])
+            fileTree(dir: it, exclude: ['Paaohjelma/**'])
         }))
     }
 }
