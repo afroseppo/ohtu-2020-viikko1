@@ -30,7 +30,7 @@ public class Varasto {
     }
     
     private double saldonAsetus(double alkuSaldo, double tilavuus) {
-        if (alkuSaldo > 0.0) {
+        if (alkuSaldo < 0.0) {
             return 0.0;
         } else if (alkuSaldo <= tilavuus) {
             return alkuSaldo;
