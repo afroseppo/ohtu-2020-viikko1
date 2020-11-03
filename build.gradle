@@ -1,10 +1,11 @@
 plugins {
     id 'application'
     id 'jacoco' 
+    id 'checkstyle'
 }
 
 repositories {
-    jcenter() 
+    jcenter()
 }
 
 dependencies {
