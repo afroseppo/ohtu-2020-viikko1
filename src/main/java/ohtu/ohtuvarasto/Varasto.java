@@ -22,7 +22,8 @@ public class Varasto {
     }
     
     private double varastonTaytto(double tilavuus) {
-        if (tilavuus > 0.0) {
+        if (tilavuus > 0.0) 
+        {
             return tilavuus;
         } else {
             return 0.0;
